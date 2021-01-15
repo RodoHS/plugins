@@ -24,7 +24,8 @@ class StreamHandlerImpl implements EventChannel.StreamHandler {
   @Override
   public void onListen(Object arguments, EventChannel.EventSink events) {
     sensorEventListener = createSensorEventListener(events);
-    sensorManager.registerListener(sensorEventListener, sensor, sensorManager.SENSOR_DELAY_NORMAL);
+    sensorManager.registerListener(sensorEventListener, sensor,
+            sensorManager.SENSOR_DELAY_FASTEST);
   }
 
   @Override
@@ -39,10 +40,11 @@ class StreamHandlerImpl implements EventChannel.StreamHandler {
 
       @Override
       public void onSensorChanged(SensorEvent event) {
-        double[] sensorValues = new double[event.values.length];
+        double[] sensorValues = new double[event.values.length + 1];
         for (int i = 0; i < event.values.length; i++) {
           sensorValues[i] = event.values[i];
         }
+        sensorValues[event.values.length] = TimeUnit.NANOSECONDS.toMillis(event.timestamp);
         events.success(sensorValues);
       }
     };
