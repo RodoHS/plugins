@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import io.flutter.plugin.common.EventChannel;
+import java.util.concurrent.TimeUnit;
 
 class StreamHandlerImpl implements EventChannel.StreamHandler {
 
